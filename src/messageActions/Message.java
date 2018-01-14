@@ -10,12 +10,27 @@ public class Message implements Serializable {
     private String message;
     private String[] users;
     private Date time;
+    private String chatName;
 
     //Constructor for clients
-    public Message(String login, String message){
+    public Message(String login, String message, String name){
         this.login = login;
         this.message = message;
         this.time = java.util.Calendar.getInstance().getTime();
+        this.chatName = name;
+    }
+
+    //Constructor for DB
+    public Message(Date time, String login, String message){
+        this.login = login;
+        this.message = message;
+        this.time = time;
+    }
+
+    //Constructor for commands
+    public Message(String command, String action){
+        this.login = command;
+        this.message = action;
     }
 
     //Constructor for server
@@ -42,9 +57,15 @@ public class Message implements Serializable {
         return this.users;
     }
 
+    public String getChatName() { return this.chatName; }
+
     public String getDate(){
         Time tm = new Time(this.time.getTime());
         return tm.toString();
+    }
+
+    public Date getDateD(){
+        return time;
     }
 }
 

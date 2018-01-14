@@ -1,3 +1,4 @@
+import messageActions.Command;
 import messageActions.Message;
 
 import java.io.*;
@@ -31,12 +32,35 @@ public class SocketClient {
                 objectOutputStream.writeObject( new Message( userName, "User join to the chat(Auto-message)" ) );
                 //new Ping( objectOutputStream, objectInputStream );
                 new ServerListenerThread( objectOutputStream, objectInputStream );
+                String chat = null;
                 String message = null;
-                System.out.println("Наберите сообщение и нажмите \n");
-
+                String[] commands;
+                System.out.println("Наберите сообщение или комманду \n");
+                boolean menu = true;
                 while (true) {
-                    message = keyboard.readLine();
-                    objectOutputStream.writeObject( new Message( userName, message ) );
+                    if (menu){
+                        System.out.println("Введите комманду");
+                        commands = keyboard.readLine().split(" ");
+                        //System.out.println(commands[0] + " " + commands[1]);
+                        if (commands[0].equals("create")){
+                            System.out.println("cool");
+                        }else{
+                            System.out.println("not cool");
+                        }
+                        objectOutputStream.writeObject( new Command( commands[0], commands[1] ) );
+                        menu = false;
+                    }else {
+                        if (chat == null) {
+                            System.out.println("Введите название чата, куда хотите написать");
+                            chat = keyboard.readLine();
+                        }
+                        message = keyboard.readLine();
+                        if (message == "/back"){
+                            menu = false;
+                        }else {
+                            objectOutputStream.writeObject(new Message(userName, message, chat));
+                        }
+                    }
                 }
             } catch ( Exception e ) { e.printStackTrace(); }
         }
