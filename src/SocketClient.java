@@ -55,8 +55,9 @@ public class SocketClient {
                             chat = keyboard.readLine();
                         }
                         message = keyboard.readLine();
-                        if (message == "/back"){
-                            menu = false;
+                        if (message.equals("back")){
+                            chat = null;
+                            menu = true;
                         }else {
                             objectOutputStream.writeObject(new Message(userName, message, chat));
                         }
