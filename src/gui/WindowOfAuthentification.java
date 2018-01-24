@@ -1,6 +1,8 @@
 package gui;
 
 import chatManager.ChatData;
+import socketClient.SocketClient;
+import userManager.UserData;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -17,10 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-class WindowOfCreating extends JFrame {
+public class WindowOfAuthentification extends JFrame {
 
     private JPanel contentPane;
     private JTextField textField;
+    private static WindowOfAuthentification frame;
 
     /**
      * Launch the application.
@@ -29,7 +32,7 @@ class WindowOfCreating extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    WindowOfCreating frame = new WindowOfCreating();
+                    frame = new WindowOfAuthentification();
                     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     frame.addWindowListener(new WindowListener() {
                         @Override
@@ -40,7 +43,8 @@ class WindowOfCreating extends JFrame {
                         @Override
                         public void windowClosing(WindowEvent e) {
                             //e.getComponent().
-                            e.getWindow().dispose();
+                            //e.getWindow().dispose();
+                            e.getWindow().setVisible(false);
                         }
 
                         @Override
@@ -79,7 +83,7 @@ class WindowOfCreating extends JFrame {
     /**
      * Create the frame.
      */
-    private WindowOfCreating() {
+    private WindowOfAuthentification() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 300, 105);
         contentPane = new JPanel();
@@ -100,28 +104,29 @@ class WindowOfCreating extends JFrame {
         splitPaneBottom.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setRightComponent(splitPaneBottom);
 
-        JButton btnCreate = new JButton("Create");
-        btnCreate.addActionListener(new ChatCreate());
-        splitPaneBottom.setLeftComponent(btnCreate);
+        JButton btnConfirm = new JButton("Confirm");
+        btnConfirm.addActionListener(new UserConfirm());
+        splitPaneBottom.setLeftComponent(btnConfirm);
 
         JButton btnCancel = new JButton("Cancel");
         btnCancel.addActionListener(new CancelAction());
         splitPaneBottom.setRightComponent(btnCancel);
     }
 
-    class ChatCreate implements ActionListener{
+    class UserConfirm implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            ChatData.getInstance().createChat(textField.getText());
-            UpToDateGui.getInstance().setChat(textField.getText());
-            dispose();
+            UserData.getInstance().setName(textField.getText());
+            //start work
+            GuiChatDog.main();
+            frame.setVisible(false);
         }
     }
 
     class CancelAction implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
-            dispose();
+            frame.setVisible(false);
         }
     }
 

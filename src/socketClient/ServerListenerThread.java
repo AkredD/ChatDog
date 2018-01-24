@@ -1,3 +1,7 @@
+package socketClient;
+
+import chatManager.ChatData;
+import gui.UpToDateGui;
 import messageActions.Message;
 import messageActions.Ping;
 
@@ -6,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
 
-public class ServerListenerThread implements Runnable {
+class ServerListenerThread implements Runnable {
     private Thread thread = null;
     private ObjectOutputStream objectOutputStream = null;
     private ObjectInputStream objectInputStream = null;
@@ -25,11 +29,12 @@ public class ServerListenerThread implements Runnable {
             while (true) {
                 Message messageIn = (Message) objectInputStream.readObject();
                 if ( messageIn instanceof Ping) {
-                    Ping ping = (Ping) messageIn;
                     objectOutputStream.writeObject( new Ping() );
                 } else {
-                    System.out.println("["  + messageIn.getDate().toString() +  "][" + messageIn.getChatName() + "]"
-                            + messageIn.getLogin() +  ":"  + messageIn.getMessage());
+                    ChatData.getInstance().getChat(messageIn.getChatName()).addMessage(messageIn);
+                    UpToDateGui.getInstance().upToDateHistoryChat(UpToDateGui.getInstance().getActiveChat());
+                    //System.out.println("["  + messageIn.getDate().toString() +  "][" + messageIn.getChatName() + "]"
+                    //        + messageIn.getLogin() +  ":"  + messageIn.getMessage());
                 }
             }
         }

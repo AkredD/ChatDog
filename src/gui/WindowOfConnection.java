@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-class WindowOfCreating extends JFrame {
+class WindowOfConnection extends JFrame {
 
     private JPanel contentPane;
     private JTextField textField;
@@ -29,7 +29,7 @@ class WindowOfCreating extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    WindowOfCreating frame = new WindowOfCreating();
+                    WindowOfConnection frame = new WindowOfConnection();
                     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     frame.addWindowListener(new WindowListener() {
                         @Override
@@ -79,7 +79,7 @@ class WindowOfCreating extends JFrame {
     /**
      * Create the frame.
      */
-    private WindowOfCreating() {
+    private WindowOfConnection() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 300, 105);
         contentPane = new JPanel();
@@ -100,19 +100,19 @@ class WindowOfCreating extends JFrame {
         splitPaneBottom.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setRightComponent(splitPaneBottom);
 
-        JButton btnCreate = new JButton("Create");
-        btnCreate.addActionListener(new ChatCreate());
-        splitPaneBottom.setLeftComponent(btnCreate);
+        JButton btnConnect = new JButton("Connect");
+        btnConnect.addActionListener(new ChatConnect());
+        splitPaneBottom.setLeftComponent(btnConnect);
 
         JButton btnCancel = new JButton("Cancel");
         btnCancel.addActionListener(new CancelAction());
         splitPaneBottom.setRightComponent(btnCancel);
     }
 
-    class ChatCreate implements ActionListener{
+    class ChatConnect implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            ChatData.getInstance().createChat(textField.getText());
+            ChatData.getInstance().connectToChat(textField.getText());
             UpToDateGui.getInstance().setChat(textField.getText());
             dispose();
         }

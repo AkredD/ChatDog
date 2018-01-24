@@ -1,5 +1,8 @@
 package chatManager;
 
+import messageActions.Command;
+
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +12,7 @@ public class ChatData{
     private static HashMap<String, Chat> chats = new HashMap<>();
     private static ObjectOutputStream objectOutputStream;
 
-    public ChatData(){
+    private ChatData(){
 
     }
 
@@ -42,5 +45,23 @@ public class ChatData{
 
     public boolean containsChat(String name){
         return chats.containsKey(name);
+    }
+
+    public void createChat(String name){
+        addChat(name);
+        formCommandToServer("create", name);
+    }
+
+    public void connectToChat(String name){
+        addChat(name);
+        formCommandToServer("connect", name);
+    }
+
+    private void formCommandToServer(String command, String name){
+        try {
+            objectOutputStream.writeObject(new Command(command, name));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

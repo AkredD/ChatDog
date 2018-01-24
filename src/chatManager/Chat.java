@@ -13,13 +13,19 @@ public class Chat{
         this.name = name;
     }
 
-
-
     public void addMessage(Message message){
         ChatData.getInstance();
         this.history.add("[" + message.getDate() + "][" + name + "]" +
                 message.getLogin() + ": " + message.getMessage());
         //updateChatHistoryGUI(history);
+    }
+
+    public ArrayList<String> getHistory(){
+        return history;
+    }
+
+    public String getName(){
+        return name;
     }
 
 }
