@@ -11,16 +11,12 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 
 class ServerListenerThread implements Runnable {
-    private Thread thread = null;
     private ObjectOutputStream objectOutputStream = null;
     private ObjectInputStream objectInputStream = null;
 
     public ServerListenerThread( ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream ) {
         this.objectOutputStream = objectOutputStream;
         this.objectInputStream = objectInputStream;
-
-        thread = new Thread( this );
-        thread.start();
     }
 
     @Override

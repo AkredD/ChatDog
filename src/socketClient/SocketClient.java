@@ -31,6 +31,7 @@ public class SocketClient implements Runnable {
     public void run() {
         try {
             try {
+                while (UserData.getInstance().getName() == null) continue;
                 InetAddress ipAddress = InetAddress.getByName(Config.ADDRESS);
                 socket = new Socket( ipAddress, Config.PORT );
                 InputStream inputStream = socket.getInputStream();
@@ -38,10 +39,11 @@ public class SocketClient implements Runnable {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream( outputStream );
                 ObjectInputStream objectInputStream = new ObjectInputStream( inputStream );
                 objectOutputStream.writeObject( new Message( UserData.getInstance().getName(), "User join to the chat(Auto-message)" ) );
-                //new Ping( objectOutputStream, objectInputStream );
-                new ServerListenerThread( objectOutputStream, objectInputStream );
                 ChatData.getInstance().setStream(objectOutputStream);
-            } catch ( Exception e ) { e.printStackTrace(); }
+                Thread serverListenerThread = new Thread(new ServerListenerThread(objectOutputStream, objectInputStream));
+                serverListenerThread.start();
+                serverListenerThread.join();
+            } catch ( InterruptedException  | IOException e  ) { e.printStackTrace(); }
         }
         finally {
             try {

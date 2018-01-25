@@ -18,14 +18,16 @@ public class UpToDateGui extends GuiChatDog{
         return instance;
     }
     public void upToDateHistoryChat(String name){
-        history = new JLabel();
         ArrayList<String> historyChat = ChatData.getInstance().getChat(name).getHistory();
         StringBuilder formHistory = new StringBuilder();
+        //super.history.
+        formHistory.append("<html>");
+        formHistory.append("<font face=’verdana’ size = 5>");
         for (int i = 0; i < historyChat.size(); ++i){
             formHistory.append(historyChat.get(i));
-            formHistory.append("\n");
         }
-        history.setText(formHistory.toString());
+        formHistory.append("</html>");
+        super.history.setText(formHistory.toString());
     }
 
     public void setChat(String name){

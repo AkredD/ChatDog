@@ -18,7 +18,6 @@ import java.util.StringTokenizer;
 public class MainClient {
     public static void main(String[] args) throws Exception {
         WindowOfAuthentification.main();
-        UserData.getInstance().setName("AkredD");
         SocketClient.getInstance();
     }
 

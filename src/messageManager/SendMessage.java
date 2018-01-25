@@ -19,7 +19,7 @@ public class SendMessage{
     private void Send(){
         try {
             objectOutputStream.writeObject(message);
-            ChatData.getInstance().getChat(message.getChatName()).addMessage(message);
+            //ChatData.getInstance().getChat(message.getChatName()).addMessage(message);
         }catch (IOException e){
             e.printStackTrace();
         }

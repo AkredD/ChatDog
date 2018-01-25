@@ -16,7 +16,7 @@ public class Chat{
     public void addMessage(Message message){
         ChatData.getInstance();
         this.history.add("[" + message.getDate() + "][" + name + "]" +
-                message.getLogin() + ": " + message.getMessage());
+                message.getLogin() + ": " + message.getMessage() + "<br>");
         //updateChatHistoryGUI(history);
     }
 

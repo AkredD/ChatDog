@@ -118,7 +118,7 @@ public class WindowOfAuthentification extends JFrame {
         public void actionPerformed(ActionEvent e) {
             UserData.getInstance().setName(textField.getText());
             //start work
-            GuiChatDog.main();
+            UpToDateGui.getInstance();
             frame.setVisible(false);
         }
     }
