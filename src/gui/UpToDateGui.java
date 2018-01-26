@@ -5,6 +5,9 @@ import chatManager.ChatData;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UpToDateGui extends GuiChatDog{
     private static UpToDateGui instance;
@@ -34,6 +37,17 @@ public class UpToDateGui extends GuiChatDog{
         chatName.setText(name);
         this.activeChat = name;
         upToDateHistoryChat(name);
+        UpToDateActiveChats();
+    }
+
+    public void UpToDateActiveChats(){
+        HashMap<String, Chat> chatsFromData = ChatData.getInstance().getChats();
+        String labelsChat[] = new String[chatsFromData.size()];
+        int i = 0;
+        for (Map.Entry<String, Chat> entry : chatsFromData.entrySet()){
+            labelsChat[i++] = entry.getKey();
+        }
+        chats.setListData(labelsChat);
     }
 
     public String getActiveChat(){

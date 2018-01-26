@@ -47,6 +47,8 @@ public class ChatData{
         return chats.containsKey(name);
     }
 
+    public HashMap<String, Chat> getChats(){ return chats;}
+
     public void createChat(String name){
         addChat(name);
         formCommandToServer("create", name);
