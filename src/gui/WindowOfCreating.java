@@ -4,10 +4,7 @@ import chatManager.ChatData;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -102,9 +99,45 @@ class WindowOfCreating extends JFrame {
 
         JButton btnCreate = new JButton("Create");
         btnCreate.addActionListener(new ChatCreate());
+        btnCreate.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    ChatData.getInstance().createChat(textField.getText());
+                    UpToDateGui.getInstance().setChat(textField.getText());
+                    dispose();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         splitPaneBottom.setLeftComponent(btnCreate);
 
         JButton btnCancel = new JButton("Cancel");
+        btnCancel.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                dispose();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         btnCancel.addActionListener(new CancelAction());
         splitPaneBottom.setRightComponent(btnCancel);
     }

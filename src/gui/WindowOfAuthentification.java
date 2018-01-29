@@ -6,10 +6,7 @@ import userManager.UserData;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -89,6 +86,28 @@ public class WindowOfAuthentification extends JFrame {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
+        contentPane.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                System.out.println(e.getKeyCode());
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println(e.getKeyCode());
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    UserData.getInstance().setName(textField.getText());
+                    UpToDateGui.getInstance();
+                    dispose();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_CANCEL) dispose();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         setContentPane(contentPane);
 
         JSplitPane splitPane = new JSplitPane();
@@ -117,16 +136,15 @@ public class WindowOfAuthentification extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             UserData.getInstance().setName(textField.getText());
-            //start work
             UpToDateGui.getInstance();
-            frame.setVisible(false);
+            dispose();
         }
     }
 
     class CancelAction implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
-            frame.setVisible(false);
+            dispose();
         }
     }
 
