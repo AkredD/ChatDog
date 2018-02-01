@@ -2,6 +2,7 @@ package gui;
 
 import chatManager.Chat;
 import chatManager.ChatData;
+import sas.swing.plaf.MultiLineLabelUI;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -22,6 +23,13 @@ public class UpToDateGui extends GuiChatDog{
     }
     public void upToDateHistoryChat(String name){
         ArrayList<String> historyChat = ChatData.getInstance().getChat(name).getHistory();
+        ArrayList<String> onlineUsersFrom = ChatData.getInstance().getChat(name).getUsers();
+        String[] onlineUsers = new String[onlineUsersFrom.size()];
+
+        for (int i = 0; i < onlineUsers.length; ++i){
+            onlineUsers[i] = onlineUsersFrom.get(i);
+        }
+        super.users.setListData(onlineUsers);
         StringBuilder formHistory = new StringBuilder();
         //super.history.
         formHistory.append("<html>");

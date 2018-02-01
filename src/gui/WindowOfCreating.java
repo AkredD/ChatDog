@@ -90,6 +90,27 @@ class WindowOfCreating extends JFrame {
 
         textField = new JTextField();
         splitPane.setLeftComponent(textField);
+        textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    ChatData.getInstance().createChat(textField.getText());
+                    UpToDateGui.getInstance().setChat(textField.getText());
+                    dispose();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_CANCEL) dispose();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         textField.setColumns(10);
 
 
@@ -99,45 +120,9 @@ class WindowOfCreating extends JFrame {
 
         JButton btnCreate = new JButton("Create");
         btnCreate.addActionListener(new ChatCreate());
-        btnCreate.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    ChatData.getInstance().createChat(textField.getText());
-                    UpToDateGui.getInstance().setChat(textField.getText());
-                    dispose();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
         splitPaneBottom.setLeftComponent(btnCreate);
 
         JButton btnCancel = new JButton("Cancel");
-        btnCancel.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                dispose();
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
         btnCancel.addActionListener(new CancelAction());
         splitPaneBottom.setRightComponent(btnCancel);
     }

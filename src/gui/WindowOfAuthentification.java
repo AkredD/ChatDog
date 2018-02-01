@@ -86,15 +86,21 @@ public class WindowOfAuthentification extends JFrame {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
-        contentPane.addKeyListener(new KeyListener() {
+        setContentPane(contentPane);
+
+        JSplitPane splitPane = new JSplitPane();
+        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        contentPane.add(splitPane, BorderLayout.NORTH);
+
+        textField = new JTextField();
+        splitPane.setLeftComponent(textField);
+        textField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                System.out.println(e.getKeyCode());
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println(e.getKeyCode());
                 if (e.getKeyCode() == KeyEvent.VK_ENTER){
                     UserData.getInstance().setName(textField.getText());
                     UpToDateGui.getInstance();
@@ -108,14 +114,6 @@ public class WindowOfAuthentification extends JFrame {
 
             }
         });
-        setContentPane(contentPane);
-
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        contentPane.add(splitPane, BorderLayout.NORTH);
-
-        textField = new JTextField();
-        splitPane.setLeftComponent(textField);
         textField.setColumns(10);
 
 
